@@ -6,7 +6,7 @@ from loss_crossentropy import loss_crossentropy
 ######################################################
 # Set use_pcode to True to use the provided pyc code
 # for inference, calc_gradient, loss_crossentropy and update_weights
-use_pcode = True
+use_pcode = False
 
 # You can modify the imports of this section to indicate
 # whether to use the provided pyc or your own code for each of the four functions.
@@ -93,9 +93,9 @@ def train(model, input, label, params, numIters):
         output, activations = inference(model, batch_input)
 
         # (3)
-        print("output" + str(output.shape))
-        loss[i], dv_output = loss_crossentropy(output, batch_label, None, False)
+        loss[i], dv_output = loss_crossentropy(output, batch_label, None, True)
         accuracy = np.mean((output.argmax(axis=0) == batch_label))
+        print("output" + str(dv_output.shape))
 
         # display training progress
         if i % 100 == 0:

@@ -50,7 +50,7 @@ def main():
 
     hyper_params = {"learning_rate": 0.01, "weight_decay": 0.0005, "batch_size": 128}
 
-    model, loss = train(model, train_data, train_labels, hyper_params, numIters=10000)
+    model, loss = train(model, train_data, train_labels, hyper_params, numIters=10)
 
     np.savez('trained_model.npz', **model)
 
