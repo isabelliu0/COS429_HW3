@@ -19,14 +19,18 @@ def inference(model, input):
 
     activations[0] = input
 
-    for i in range(1, num_layers): #each layer is a dict
-        fwd_fn = model['layers'][i]['fwd_fn']
-        params = model['layers'][i]['params']
-        hyper_params = model['layers'][i]['hyper_params']
+    for i, layer in enumerate(model['layers'], start = 1): #each layer is a dict
+        fwd_fn = layer['fwd_fn']
+        params = layer.get('params', {})
+        hyper_params = layer.get('hyper_params', {})
 
         a, _, _ = fwd_fn(activations[i-1], params, hyper_params, False)
-        activations[i] = a
+
+        if i < num_layers:
+            activations[i] = a
+        else:
+            output = a
 
 
-    output = activations[-1]
+    #output = activations[-1]
     return output, activations

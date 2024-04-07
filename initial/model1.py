@@ -9,6 +9,8 @@ from train import train
 
 def main():
     train_data, train_labels, test_data, test_labels = get_CIFAR10_data()
+    print("Train data shape:", train_data.shape)
+
 
     # input: 32 x 32 x 3 image from cifar-10
     # conv1: 32 x 32 x 3 --> 30 x 30 x 32 (filter depth = 3)
@@ -44,6 +46,7 @@ def main():
          init_layers('softmax', {})]
 
     model = init_model(l, [32, 32, 3], 10, True)
+    print('hi')
 
     hyper_params = {"learning_rate": 0.01, "weight_decay": 0.0005, "batch_size": 128}
 

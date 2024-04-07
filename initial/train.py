@@ -6,7 +6,7 @@ from loss_crossentropy import loss_crossentropy
 ######################################################
 # Set use_pcode to True to use the provided pyc code
 # for inference, calc_gradient, loss_crossentropy and update_weights
-use_pcode = False
+use_pcode = True
 
 # You can modify the imports of this section to indicate
 # whether to use the provided pyc or your own code for each of the four functions.
@@ -14,8 +14,11 @@ if use_pcode:
     # import the provided pyc implementation
     sys.path += ['pyc_code']
     from inference_ import inference
+    #from inference import inference
     from calc_gradient_ import calc_gradient
+    #from calc_gradient import calc_gradient
     from update_weights_ import update_weights
+    #from update_weights import update_weights
 else:
     # import your own implementation
     from inference import inference
@@ -81,13 +84,16 @@ def train(model, input, label, params, numIters):
         # (1)
         batch_start = (i * batch_size) % num_inputs
         batch_end = batch_start + batch_size
-        batch_input = input[:, batch_start:batch_end]
-        batch_label = label[batch_start:batch_end]
+        print("start" + str(batch_start) + "end"+str(batch_end))
+        batch_input = input[:, :, :, batch_start:batch_end]
+        print(batch_input.size)
+        batch_label = label[batch_start:min(batch_end, num_inputs)]
 
         # (2)
         output, activations = inference(model, batch_input)
 
         # (3)
+        print("output" + str(output.shape))
         loss[i], dv_output = loss_crossentropy(output, batch_label, None, False)
         accuracy = np.mean((output.argmax(axis=0) == batch_label))
 
