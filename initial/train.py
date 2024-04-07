@@ -84,9 +84,7 @@ def train(model, input, label, params, numIters):
         # (1)
         batch_start = (i * batch_size) % num_inputs
         batch_end = batch_start + batch_size
-        print("start" + str(batch_start) + "end"+str(batch_end))
         batch_input = input[:, :, :, batch_start:batch_end]
-        print(batch_input.size)
         batch_label = label[batch_start:min(batch_end, num_inputs)]
 
         # (2)
@@ -95,7 +93,6 @@ def train(model, input, label, params, numIters):
         # (3)
         loss[i], dv_output = loss_crossentropy(output, batch_label, None, True)
         accuracy = np.mean((output.argmax(axis=0) == batch_label))
-        print("output" + str(dv_output.shape))
 
         # display training progress
         if i % 100 == 0:

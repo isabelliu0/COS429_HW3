@@ -55,10 +55,10 @@ def get_CIFAR10_data(cifar10_dir='../cifar-10-batches-py', num_training=50000, n
     X_test = np.transpose(X_test, (1,2,3,0))
 
     ## for debugging: use a subset of the data -- to be deleted
-    X_train = X_train[..., :500]
-    y_train = y_train[:500]
-    X_test = X_test[..., 100]
-    y_test = y_test[:100]
+    #X_train = X_train[..., :500]
+    #y_train = y_train[:500]
+    #X_test = X_test[..., 100]
+    #y_test = y_test[:100]
     # whole size:
     # Train data shape:  (32, 32, 3, 50000)
     # Train labels shape:  (50000,)
