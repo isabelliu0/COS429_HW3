@@ -28,6 +28,7 @@ def main():
     # linear2: 512 --> 10
     # softmax: no change
 
+    '''
     l = [init_layers('conv', {'filter_size': 3,
                               'filter_depth': 3,
                               'num_filters': 32}),
@@ -47,31 +48,49 @@ def main():
          init_layers('linear', {'num_in': 512,
                                 'num_out': 10}),
          init_layers('softmax', {})]
+    '''
+    l = [init_layers('conv', {'filter_size': 3,
+                              'filter_depth': 3,
+                              'num_filters': 12}),
+         init_layers('relu', {}),
+         init_layers('pool', {'filter_size': 2,
+                              'stride': 2}),
+         init_layers('conv', {'filter_size': 3, 
+                              'filter_depth': 12,
+                              'num_filters': 16}),
+         init_layers('relu', {}),
+         init_layers('pool', {'filter_size': 2,
+                              'stride': 2}),
+         init_layers('flatten', {}),
+         init_layers('linear', {'num_in': 576,
+                                'num_out': 128}),
+         init_layers('relu', {}),
+         init_layers('linear', {'num_in': 128,
+                                'num_out': 10}),
+         init_layers('softmax', {})]
 
     model = init_model(l, [32, 32, 3], 10, True)
     print('hi')
 
     hyper_params = {"learning_rate": 0.01, "weight_decay": 0.0005, "batch_size": 128}
 
-    model, loss = train(model, train_data, train_labels, hyper_params, numIters=1000)
+    model, train_loss, test_loss = train(model, train_data, train_labels, test_data, test_labels, hyper_params, numIters=5)
 
     #plot the training loss
-    plt.plot(loss)
+    plt.plot(train_loss)
     plt.title("Training Loss")
     plt.xlabel("Number of Iterations")
-    plt.ylabel("Loss")
+    plt.ylabel("Train Loss")
 
-    plt.savefig("train_loss_3conv.png")
+    plt.savefig("train_loss.png")
 
-    np.savez('trained_model.npz', **model)
+     #plot the training loss
+    plt.plot(test_loss)
+    plt.title("Training Loss")
+    plt.xlabel("Number of Iterations")
+    plt.ylabel("Test Loss")
 
-    #run it on test data to see accuracy
-    output, _ = inference(model, test_data)
-
-    test_loss, _ = loss_crossentropy(output, test_labels, None, True)
-    test_accuracy = np.mean((output.argmax(axis=0) == test_labels))
-
-    print(f'Test Loss = {test_loss:.3f}, Test Accuracy = {test_accuracy:.3f}')
+    plt.savefig("test_loss.png")
 
     np.savez('trained_model.npz', **model)
 
