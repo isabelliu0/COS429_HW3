@@ -96,17 +96,15 @@ def train(model, input, label, test_input, test_label, params, numIters):
         accuracy = np.mean((output.argmax(axis=0) == batch_label))
 
         # display training progress
-        if i % 50 == 0:
+        if i % 100 == 0:
             print(f'Iteration {i}: Loss = {loss[i]:.3f}, Accuracy = {accuracy:.3f}')
 
         # display test loss
-        test_output, test_activations = inference(model, test_input)
-        test_loss[i], test_dv_output = loss_crossentropy(test_output, test_label, None, True)
-        test_accuracy = np.mean((output.argmax(axis=0) == batch_label))
-
-        print("hello?")
+        if i % 100 == 0:
+            test_output, test_activations = inference(model, test_input)
+            test_loss[i], test_dv_output = loss_crossentropy(test_output, test_label, None, True)
+            test_accuracy = np.mean((output.argmax(axis=0) == batch_label))
               
-        if i % 1 == 0:
             print(f'Iteration {i}: Test Loss = {test_loss[i]:.3f}, Test Accuracy = {test_accuracy:.3f}')
         
         # check for loss plateau
