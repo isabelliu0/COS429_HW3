@@ -31,6 +31,10 @@ def update_weights(model, grads, hyper_params):
                                             'b': np.zeros_like(updated_model['layers'][i]['params']['b'])}
 
     for i in range(num_layers):
+        # skip dropout layers
+        if model['layers'][i]['type'] == 'dropout':
+            continue
+
         updated_model['velocity'][i]['W'] = momentum * updated_model['velocity'][i]['W'] - a * (grads[i]['W'] + lmd * updated_model['layers'][i]['params']['W'])
         updated_model['velocity'][i]['b'] = momentum * updated_model['velocity'][i]['b'] - a * grads[i]['b']
         # reference: momentum formulas based on lecture slides

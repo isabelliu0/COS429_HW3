@@ -7,6 +7,7 @@ from fn_relu import fn_relu
 from fn_pool import fn_pool
 from fn_softmax import fn_softmax
 from fn_linear import fn_linear
+from fn_dropout import fn_dropout
 
 ######################################################
 # Set use_pcode to True to use the provided pyc code for layer functions
@@ -67,6 +68,9 @@ def init_layers(type, info):
         fn = fn_flatten
     elif type == 'relu':
         fn = fn_relu
+    elif type == 'dropout':
+        fn = fn_dropout
+        params['rate'] = info['rate']
     else:
         assert False, 'type %s not supported' % type
 

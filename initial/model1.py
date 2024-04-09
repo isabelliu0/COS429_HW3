@@ -6,6 +6,9 @@ import numpy as np
 from init_layers import init_layers
 from init_model import init_model
 from train import train
+import matplotlib.pyplot as plt
+from inference import inference
+from loss_crossentropy import loss_crossentropy
 
 def main():
     train_data, train_labels, test_data, test_labels = get_CIFAR10_data()
@@ -52,7 +55,23 @@ def main():
 
     model, loss = train(model, train_data, train_labels, hyper_params, numIters=1000)
 
-    np.savez('trained_model.npz', **model)
+    #plot the training loss
+    plt.plot(loss)
+    plt.title("Training Loss")
+    plt.xlabel("Number of Iterations")
+    plt.ylabel("Loss")
+
+    plt.savefig("train_loss_model1.png")
+
+    #run it on test data to see accuracy
+    output, _ = inference(model, test_data)
+
+    test_loss, _ = loss_crossentropy(output, test_labels, None, True)
+    test_accuracy = np.mean((output.argmax(axis=0) == test_labels))
+
+    print(f'Test Loss = {test_loss:.3f}, Test Accuracy = {test_accuracy:.3f}')
+
+    np.savez('trained_model1.npz', **model)
 
 if __name__ == '__main__':
     main()

@@ -65,7 +65,7 @@ def train(model, input, label, params, numIters):
 
     # additional things to make the process better and clearer
     prev_loss = float('inf')
-    loss_threshold = 0.01 # for loss plateau
+    loss_threshold = 0.0001 # for loss plateau
     accuracy_goal = 0.95
 
 
