@@ -22,6 +22,7 @@ def update_weights(model, grads, hyper_params):
     updated_model = model
 
     # TODO: Update the weights of each layer in your model based on the calculated gradients
+    # ps. momentum implemented to accelerate training
 
     # initialize velocity to zero if not present
     if 'velocity' not in updated_model:

@@ -32,5 +32,4 @@ def inference(model, input):
             output = a
 
 
-    #output = activations[-1]
     return output, activations
