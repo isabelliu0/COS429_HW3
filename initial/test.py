@@ -8,7 +8,7 @@ from loss_crossentropy import loss_crossentropy
 
 _, _, test_data, test_labels = get_CIFAR10_data()
 
-model = np.load('trained_model1.npz', allow_pickle=True)
+model = np.load('trained_model3.npz', allow_pickle=True)
 model = dict(model)
 
 #run it on test data to see accuracy

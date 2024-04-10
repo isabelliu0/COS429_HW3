@@ -62,15 +62,23 @@ def main():
     plt.xlabel("Number of Iterations")
     plt.ylabel("Train Loss")
 
-    plt.savefig("train_loss.png")
+    plt.savefig("train_loss_model3.png")
 
      #plot the training loss
     plt.plot(test_loss)
-    plt.title("Training Loss")
+    plt.title("Testing Loss")
     plt.xlabel("Number of Iterations")
     plt.ylabel("Test Loss")
 
     plt.savefig("test_loss_model3_.png")
+
+    #run the final model on test data to see accuracy
+    output, _ = inference(model, test_data)
+
+    test_loss, _ = loss_crossentropy(output, test_labels, None, True)
+    test_accuracy = np.mean((output.argmax(axis=0) == test_labels))
+
+    print(f'Test Loss = {test_loss:.3f}, Test Accuracy = {test_accuracy:.3f}')
 
     np.savez('trained_model3.npz', **model)
 
